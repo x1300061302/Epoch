@@ -1050,6 +1050,12 @@ CONTAINS
       CALL push_on_eval(values(1)**2 * m0 * epsilon0 / q0**2)
       RETURN
     ENDIF
+    !Xiey calculate k2(z) \simeq 2/z^2 make sure z << 1 
+    IF (opcode == c_func_bessel_k2) THEN
+      CALL get_values(1, values)
+      CALL push_on_eval(2/(values(1)*values(1))) 
+      RETURN
+    ENDIF
 
     IF (opcode == c_func_abs) THEN
       CALL get_values(1, values)
