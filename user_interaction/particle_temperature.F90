@@ -150,10 +150,12 @@ CONTAINS
         mu =(mass * c * c)/kb/temperature     ! normalized temperature
         tp = 1.0/mu
         gammaz = sqrt(1+(driftz/mass/c)**2.0_num)
-        betaz =  sqrt(1-1/gammaz**2.0_num)
+        !betaz =  sqrt(1-1/gammaz**2.0_num)
+        betaz = driftz/mass/c/gammaz
+        !WRITE(*,*), betaz 
         ! use Gamma distribution as comparision function for the 
         ! rejection method
-        IF (tp < 1)THEN
+        IF (tp < 0.1)THEN
             px = momentum_from_temperature(mass,temperature,0.0_num)
             py = momentum_from_temperature(mass,temperature,0.0_num)
             pz = momentum_from_temperature(mass,temperature,driftz)
@@ -174,14 +176,21 @@ CONTAINS
         x7 = random()
         px = 2.0_num * ur * sqrt(x5*(1-x5))*cos(2*pi*x6)
         py = 2.0_num * ur * sqrt(x5*(1-x5))*sin(2*pi*x6)
-        ! Xiey
         pz = ur * (2*x5-1)
         ga = sqrt(1+ur*ur)
-        if(-betaz*pz/ga > x7) pz = -pz
+        ! Xiey Change try
+        if(-betaz*pz/ga > x7) THEN 
+            pz = -pz
+            betaz = -betaz 
+        END IF
         pz = gammaz * (pz + betaz*sqrt(1+ur*ur))
         px = px * mass * c
         py = py * mass * c
         pz = pz * mass * c
+
+        !IF (betaz < 0 ) THEN
+        !    WRITE(*,*) pz,betaz
+        !END IF
     END SUBROUTINE rel_momentum_from_temperature_z
 
 END MODULE particle_temperature
