@@ -545,6 +545,9 @@ CONTAINS
       jy = jy - initial_jy
       jz = jz - initial_jz
     END IF
+    !IF(rank == 0) THEN
+    !    WRITE(*,*) 'END of push_particles'
+    !ENDIF
 
   END SUBROUTINE push_particles
 
@@ -609,15 +612,22 @@ CONTAINS
     REAL(num) :: d_init, d_final
     REAL(num) :: probe_energy, dtfac, fac
     LOGICAL :: probes_for_species
+    INTEGER(num) :: nnn
 #endif
+    !IF (rank == 0) WRITE(*,*) 'Begin push photon'
 
 #ifndef NO_PARTICLE_PROBES
     current_probe => species_list(ispecies)%attached_probes
     probes_for_species = ASSOCIATED(current_probe)
 #endif
     dtfac = dt * c**2
+    !IF (rank == 0) WRITE(*,*) 'A'
 
     ! set current to point to head of list
+    !IF (rank == 0) THEN
+    !WRITE(*,*) 'A'
+    !ENDIF
+    !nnn = 0
     current => species_list(ispecies)%attached_list%head
     ! loop over photons
     DO WHILE(ASSOCIATED(current))
@@ -672,9 +682,21 @@ CONTAINS
         ENDDO
       ENDIF
 #endif
+    !IF (rank == 0) THEN
+    !WRITE(*,*) 'B'
+    !ENDIF
 
       current => current%next
+    !IF (rank == 0) THEN
+    !WRITE(*,*) 'C',nnn
+    !nnn = nnn + 1
+    !ENDIF
+
     ENDDO
+
+    !IF (rank == 0) THEN
+    !WRITE(*,*) 'D'
+    !ENDIF
 
   END SUBROUTINE push_photons
 #endif

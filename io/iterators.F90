@@ -106,6 +106,13 @@ CONTAINS
           array(part_count) = cur%eta
           cur => cur%next
         ENDDO
+      CASE (c_dump_part_minus_energy)
+        DO WHILE (ASSOCIATED(cur) .AND. (part_count < npoint_it))
+          part_count = part_count + 1
+          array(part_count) = cur%minus_energy
+          cur => cur%next
+        ENDDO
+
 #endif 
 
       CASE (c_dump_part_px)

@@ -82,15 +82,22 @@ CONTAINS
           species_list(ispecies)%initial_conditions%density_max)
 #endif
 !   !Xiey  only drift in z-direction.
-!      CALL setup_particle_temperature(&
-!          species_list(ispecies)%initial_conditions%temp(:,:,1), c_dir_x, &
-!          species, species_list(ispecies)%initial_conditions%drift(:,:,1))
-!      CALL setup_particle_temperature(&
-!          species_list(ispecies)%initial_conditions%temp(:,:,2), c_dir_y, &
-!          species, species_list(ispecies)%initial_conditions%drift(:,:,2))
+    IF (species_list(ispecies)%species_type == c_species_id_photon) THEN
+      CALL setup_particle_temperature(&
+          species_list(ispecies)%initial_conditions%temp(:,:,1), c_dir_x, &
+          species, species_list(ispecies)%initial_conditions%drift(:,:,1))
+      CALL setup_particle_temperature(&
+          species_list(ispecies)%initial_conditions%temp(:,:,2), c_dir_y, &
+          species, species_list(ispecies)%initial_conditions%drift(:,:,2))
       CALL setup_particle_temperature(&
           species_list(ispecies)%initial_conditions%temp(:,:,3), c_dir_z, &
           species, species_list(ispecies)%initial_conditions%drift(:,:,3))
+    ELSE
+      CALL setup_particle_temperature(&
+          species_list(ispecies)%initial_conditions%temp(:,:,3), c_dir_z, &
+          species, species_list(ispecies)%initial_conditions%drift(:,:,3))
+    ENDIF
+
     ENDDO
 
     IF (rank == 0) THEN

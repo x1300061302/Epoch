@@ -876,7 +876,7 @@ CONTAINS
     INTEGER, INTENT(IN) :: iphoton
     REAL(num), INTENT(IN) :: eta
     REAL(num) :: dir_x, dir_y, dir_z, mag_p, generating_gamma
-    REAL(num) :: rand_temp, photon_energy
+    REAL(num) :: rand_temp, photon_energy,mc,gamma2
     TYPE(particle), POINTER :: new_photon
 
     mag_p = MAX(SQRT(generating_electron%part_p(1)**2 &
@@ -919,6 +919,12 @@ CONTAINS
       new_photon%optical_depth = reset_optical_depth()
       new_photon%particle_energy = photon_energy
       new_photon%weight = generating_electron%weight
+      !Xiey 
+      !Calculate the minus energy = gamma1 me*c^2 - cp - gamma2 me*c^2 
+      gamma2 = SQRT(1.0_num + (mag_p /m0 /c)**2) 
+      new_photon%minus_energy = generating_gamma*m0*c*c&
+                              - photon_energy &
+                              - gamma2*m0*c*c 
 
       CALL add_particle_to_partlist(species_list(iphoton)%attached_list, &
           new_photon)
