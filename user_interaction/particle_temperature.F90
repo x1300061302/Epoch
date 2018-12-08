@@ -64,6 +64,22 @@ CONTAINS
       ENDDO
 
       !Not Use Juttner Distribution
+    !Xiey Can load photon
+    IF (part_species%species_type == c_species_id_photon) THEN
+        IF (direction == c_dir_x) THEN 
+            current%part_p(1) = drift_local
+            current%particle_energy = current%particle_energy + c*drift_local
+        !IF (rank == 0) WRITE(*,*) 'c_dir_x', drift_local
+        ENDIF 
+        IF (direction == c_dir_y) THEN 
+            current%part_p(2) = drift_local
+            current%particle_energy = current%particle_energy + c*drift_local
+        ENDIF
+        IF (direction == c_dir_z) THEN 
+            current%part_p(3) = drift_local
+            current%particle_energy = current%particle_energy + c*drift_local
+        ENDIF
+    ELSE
     IF (.NOT. use_juttner) THEN
         IF (direction == c_dir_x) current%part_p(1) = &
             momentum_from_temperature(mass, temp_local, drift_local)
@@ -100,6 +116,7 @@ CONTAINS
           current%part_p(3) = pz
       END IF ! direction == c_dir_z
   ENDIF!use_juttner
+  ENDIF!For photon
       current => current%next
       ipart = ipart + 1
     ENDDO
@@ -119,8 +136,6 @@ CONTAINS
     momentum_from_temperature = random_box_muller(stdev, mu)
 
   END FUNCTION momentum_from_temperature
-
-
 
   ! Function for generating momenta of thermal particles in a particular
   ! direction, e.g. the +x direction.

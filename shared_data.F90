@@ -584,6 +584,7 @@ MODULE shared_data
     REAL(num) :: optical_depth
     REAL(num) :: particle_energy
     REAL(num) :: eta 
+    REAL(num) :: minus_energy
 #ifdef TRIDENT_PHOTONS
     REAL(num) :: optical_depth_tri
 #endif
@@ -764,17 +765,18 @@ MODULE shared_data
   INTEGER, PARAMETER :: c_dump_average_weight    = 53
   !Xiey eta & chi
   INTEGER, PARAMETER :: c_dump_part_eta          = 54
+  INTEGER, PARAMETER :: c_dump_part_minus_energy = 55
 
 #ifdef WORK_DONE_INTEGRATED
-  INTEGER, PARAMETER :: c_dump_part_work_x       = 55
-  INTEGER, PARAMETER :: c_dump_part_work_y       = 56
-  INTEGER, PARAMETER :: c_dump_part_work_z       = 57
-  INTEGER, PARAMETER :: c_dump_part_work_x_total = 58
-  INTEGER, PARAMETER :: c_dump_part_work_y_total = 59
-  INTEGER, PARAMETER :: c_dump_part_work_z_total = 60
-  INTEGER, PARAMETER :: num_vars_to_dump         = 60
+  INTEGER, PARAMETER :: c_dump_part_work_x       = 56
+  INTEGER, PARAMETER :: c_dump_part_work_y       = 57
+  INTEGER, PARAMETER :: c_dump_part_work_z       = 58
+  INTEGER, PARAMETER :: c_dump_part_work_x_total = 59
+  INTEGER, PARAMETER :: c_dump_part_work_y_total = 60
+  INTEGER, PARAMETER :: c_dump_part_work_z_total = 61
+  INTEGER, PARAMETER :: num_vars_to_dump         = 61
 #else
-  INTEGER, PARAMETER :: num_vars_to_dump         = 54
+  INTEGER, PARAMETER :: num_vars_to_dump         = 55
 #endif
   INTEGER, DIMENSION(num_vars_to_dump) :: dumpmask
 

@@ -569,6 +569,8 @@ CONTAINS
             'QED energy', 'J', it_output_real)
         CALL write_particle_variable(c_dump_part_eta, code, &
             'Eta', '', it_output_real)
+        CALL write_particle_variable(c_dump_part_minus_energy, code, &
+            'Minus_energy', 'J', it_output_real)
 #ifdef TRIDENT_PHOTONS
         CALL write_particle_variable(c_dump_part_opdepth_tri, code, &
             'Trident Depth', '', it_output_real)

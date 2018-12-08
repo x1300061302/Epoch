@@ -250,6 +250,8 @@ CONTAINS
 
       ! Sanity check
       DO i = 1, n_species
+      !xiey test
+
         IF (species_list(i)%species_type == c_species_id_photon) CYCLE
         IF (species_list(i)%mass > c_tiny) CYCLE
         IF (rank == 0) THEN

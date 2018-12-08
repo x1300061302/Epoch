@@ -80,6 +80,7 @@ CONTAINS
     io_block_name (c_dump_part_opdepth     ) = 'optical_depth'
     io_block_name (c_dump_part_qed_energy  ) = 'qed_energy'
     io_block_name (c_dump_part_eta         ) = 'eta'
+    io_block_name (c_dump_part_minus_energy) = 'minus_energy'
 #ifdef TRIDENT_PHOTONS
     io_block_name (c_dump_part_opdepth_tri ) = 'trident_optical_depth'
 #endif

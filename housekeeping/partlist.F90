@@ -62,6 +62,10 @@ CONTAINS
     nvar = nvar+1
 #endif
 #ifdef PHOTONS
+    !minus_energy 
+    nvar = nvar + 1
+    !eta 
+    nvar = nvar + 1
     nvar = nvar+2
 #ifdef TRIDENT_PHOTONS
     nvar = nvar+1
@@ -409,7 +413,8 @@ CONTAINS
     array(cpos) = a_particle%optical_depth
     array(cpos+1) = a_particle%particle_energy
     array(cpos+2) = a_particle%eta
-    cpos = cpos+3
+    array(cpos+3) = a_particle%minus_energy
+    cpos = cpos+4
 #ifdef TRIDENT_PHOTONS
     array(cpos) = a_particle%optical_depth_tri
     cpos = cpos+1
@@ -473,7 +478,8 @@ CONTAINS
     a_particle%optical_depth = array(cpos)
     a_particle%particle_energy = array(cpos+1)
     a_particle%eta = array(cpos+2)
-    cpos = cpos+3
+    a_particle%minus_energy = array(cpos+3)
+    cpos = cpos+4
 #ifdef TRIDENT_PHOTONS
     a_particle%optical_depth_tri = array(cpos)
     cpos = cpos+1

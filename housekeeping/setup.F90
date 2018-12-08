@@ -596,7 +596,7 @@ CONTAINS
           ENDDO ! ix
           ENDDO ! iy
         ENDIF
-        WRITE(*,*) 'G', min_dt
+        !WRITE(*,*) 'G', min_dt
       ENDIF
     ENDDO
 
@@ -653,14 +653,14 @@ CONTAINS
 
 
     dt_solver = dt
-    WRITE(*,*) 'C',dt
+    !WRITE(*,*) 'C',dt
 
     IF (dt_plasma_frequency > c_tiny) dt = MIN(dt, dt_plasma_frequency)
-    WRITE(*,*) 'D',dt
+    !WRITE(*,*) 'D',dt
 
     IF (dt_laser > c_tiny) dt = MIN(dt, dt_laser)
 
-    WRITE(*,*) 'E',dt
+    !WRITE(*,*) 'E',dt
 
     IF (maxwell_solver /= c_maxwell_solver_yee .AND. dt < dt_solver) THEN
       IF (rank == 0) THEN

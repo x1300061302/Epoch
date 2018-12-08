@@ -236,6 +236,11 @@ CONTAINS
       RETURN
     ENDIF
 
+    IF (str_cmp(TRIM(ADJUSTL(str_in)), 'zero_gradient')) THEN
+      as_bc = c_bc_zero_gradient
+      RETURN
+    ENDIF
+
     IF (str_cmp(TRIM(ADJUSTL(str_in)), 'conduct')) THEN
       as_bc = c_bc_conduct
       RETURN
