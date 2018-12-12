@@ -779,6 +779,19 @@ MODULE shared_data
   INTEGER, PARAMETER :: num_work = 0
 #endif
 
+#ifdef FLUID_STATISTICS
+  INTEGER, PARAMETER :: c_dump_species_jx = num_vars + num_work + 1
+  INTEGER, PARAMETER :: c_dump_species_jy = num_vars + num_work + 2
+  INTEGER, PARAMETER :: c_dump_species_jz = num_vars + num_work + 3
+
+  !INTEGER, PARAMETER :: c_dump_field_vx = num_vars + num_work + 1
+  !INTEGER, PARAMETER :: c_dump_field_vy = num_vars + num_work + 2
+  !INTEGER, PARAMETER :: c_dump_field_vz = num_vars + num_work + 3
+  INTEGER, PARAMETER :: num_fluid = 3
+#else
+  INTEGER, PARAMETER :: num_fluid = 0
+#endif 
+
 
 #ifdef PHOTONS
   !Xiey eta & chi
@@ -789,7 +802,7 @@ MODULE shared_data
   INTEGER, PARAMETER :: num_pho = 0
 #endif
 
-  INTEGER, PARAMETER :: num_vars_to_dump         =  num_vars + num_work + num_pho
+  INTEGER, PARAMETER :: num_vars_to_dump         =  num_vars + num_work + num_fluid + num_pho
   INTEGER, DIMENSION(num_vars_to_dump) :: dumpmask
 
   !----------------------------------------------------------------------------

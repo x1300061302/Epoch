@@ -126,6 +126,12 @@ CONTAINS
     io_block_name (c_dump_cpml_psi_bzy     ) = 'cpml_psi_bzy'
     io_block_name (c_dump_absorption       ) = 'absorption'
     io_block_name (c_dump_total_energy_sum ) = 'total_energy_sum'
+#ifdef FLUID_STATISTICS
+    !Xiey 
+    io_block_name (c_dump_species_jx) = 'jx_species'
+    io_block_name (c_dump_species_jy) = 'jy_species'
+    io_block_name (c_dump_species_jz) = 'jz_species'
+#endif
 
     i = num_vars_to_dump
     o1 = 1
@@ -686,6 +692,10 @@ CONTAINS
         IF (mask_element == c_dump_jx) bad = .FALSE.
         IF (mask_element == c_dump_jy) bad = .FALSE.
         IF (mask_element == c_dump_jz) bad = .FALSE.
+        !Xiey
+        IF (mask_element == c_dump_species_jx) bad = .FALSE.
+        IF (mask_element == c_dump_species_jy) bad = .FALSE.
+        IF (mask_element == c_dump_species_jz) bad = .FALSE.
         IF (bad) THEN
           IF (rank == 0 .AND. IAND(mask, c_io_species) /= 0) THEN
             DO iu = 1, nio_units ! Print to stdout and to file
@@ -724,6 +734,10 @@ CONTAINS
         IF (mask_element == c_dump_ppc) bad = .FALSE.
         IF (mask_element == c_dump_average_weight) bad = .FALSE.
         IF (mask_element == c_dump_temperature) bad = .FALSE.
+        !Xiey
+        IF (mask_element == c_dump_species_jx) bad = .FALSE.
+        IF (mask_element == c_dump_species_jy) bad = .FALSE.
+        IF (mask_element == c_dump_species_jz) bad = .FALSE.
         IF (bad) THEN
           IF (rank == 0) THEN
             DO iu = 1, nio_units ! Print to stdout and to file
