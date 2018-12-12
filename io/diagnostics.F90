@@ -622,15 +622,15 @@ CONTAINS
             c_stagger_cell_centre, calc_temperature, array)
         !Xiey 
 
-        CALL write_nspecies_field(c_dump_species_jx, code, &
+        CALL write_nspecies_field(c_dump_jx, code, &
             'jx', 'Jx', 'A/m^2', &
             c_stagger_cell_centre, calc_per_species_jx, array)
 
-        CALL write_nspecies_field(c_dump_species_jy, code, &
+        CALL write_nspecies_field(c_dump_jy, code, &
             'jy', 'Jy', 'A/m^2', &
             c_stagger_cell_centre, calc_per_species_jy, array)
 
-        CALL write_nspecies_field(c_dump_species_jz, code, &
+        CALL write_nspecies_field(c_dump_jz, code, &
             'jz', 'Jz', 'A/m^2', &
             c_stagger_cell_centre, calc_per_species_jz, array)
 
@@ -1275,33 +1275,6 @@ CONTAINS
               + REAL(array * dt, r4)
         ENDDO
         DEALLOCATE(array)
-      ! Xiey 
-      CASE(c_dump_species_jx)
-        ALLOCATE(array(1-ng:nx+ng,1-ng:ny+ng))
-        DO ispecies = 1, n_species_local
-          CALL calc_per_species_jx(array, ispecies-avg%species_sum)
-          avg%r4array(:,:,ispecies) = avg%r4array(:,:,ispecies) &
-              + REAL(array * dt, r4)
-        ENDDO
-        DEALLOCATE(array)
-
-      CASE(c_dump_species_jy)
-        ALLOCATE(array(1-ng:nx+ng,1-ng:ny+ng))
-        DO ispecies = 1, n_species_local
-          CALL calc_per_species_jy(array, ispecies-avg%species_sum)
-          avg%r4array(:,:,ispecies) = avg%r4array(:,:,ispecies) &
-              + REAL(array * dt, r4)
-        ENDDO
-        DEALLOCATE(array)
-
-      CASE(c_dump_species_jz)
-        ALLOCATE(array(1-ng:nx+ng,1-ng:ny+ng))
-        DO ispecies = 1, n_species_local
-          CALL calc_per_species_jz(array, ispecies-avg%species_sum)
-          avg%r4array(:,:,ispecies) = avg%r4array(:,:,ispecies) &
-              + REAL(array * dt, r4)
-        ENDDO
-        DEALLOCATE(array)
       CASE(c_dump_number_density)
         ALLOCATE(array(1-ng:nx+ng,1-ng:ny+ng))
         DO ispecies = 1, n_species_local
@@ -1859,9 +1832,9 @@ CONTAINS
         IF (IAND(io_list(ispecies)%dumpmask, code) == 0) CYCLE
         !Xiey exclude photon from current_jx
         IF ((io_list(ispecies)%species_type == c_species_id_photon) .AND. &
-            ((id == c_dump_species_jx) .OR. &
-            (id == c_dump_species_jy) .OR. &
-            (id == c_dump_species_jz))) CYCLE 
+            ((id == c_dump_jx) .OR. &
+            (id == c_dump_jy) .OR. &
+            (id == c_dump_jz))) CYCLE 
             
 
         CALL check_name_length('species', &

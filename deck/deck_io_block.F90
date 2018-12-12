@@ -693,9 +693,11 @@ CONTAINS
         IF (mask_element == c_dump_jy) bad = .FALSE.
         IF (mask_element == c_dump_jz) bad = .FALSE.
         !Xiey
+#ifdef FLUID_STATISTICS
         IF (mask_element == c_dump_species_jx) bad = .FALSE.
         IF (mask_element == c_dump_species_jy) bad = .FALSE.
         IF (mask_element == c_dump_species_jz) bad = .FALSE.
+#endif
         IF (bad) THEN
           IF (rank == 0 .AND. IAND(mask, c_io_species) /= 0) THEN
             DO iu = 1, nio_units ! Print to stdout and to file
@@ -735,9 +737,11 @@ CONTAINS
         IF (mask_element == c_dump_average_weight) bad = .FALSE.
         IF (mask_element == c_dump_temperature) bad = .FALSE.
         !Xiey
+#ifdef FLUID_STATISTICS
         IF (mask_element == c_dump_species_jx) bad = .FALSE.
         IF (mask_element == c_dump_species_jy) bad = .FALSE.
         IF (mask_element == c_dump_species_jz) bad = .FALSE.
+#endif 
         IF (bad) THEN
           IF (rank == 0) THEN
             DO iu = 1, nio_units ! Print to stdout and to file
